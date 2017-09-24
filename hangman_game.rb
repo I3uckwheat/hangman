@@ -12,7 +12,7 @@ class Hangman
 
   def guess_handler(guesses)
     guesses.each do |letter|
-      correct_guess?(letter) ? update_correct_guesses(letter) : update_guesses(letter)
+      correct_guess?(letter) ? update_correct_guesses(letter) : update_incorrect_guesses(letter)
     end
   end
 
@@ -20,7 +20,7 @@ class Hangman
     @secret_word.include?(letter)
   end
 
-  def update_guesses(letter)
+  def update_incorrect_guesses(letter)
     next if win? || lose?
     @incorrect_guesses << letter
     puts "Guesses #{@guesses}"
@@ -35,7 +35,11 @@ class Hangman
     puts "Correct Guesses: #{@correct_guesses}"
   end
 
-  def update_hanged_status; end
+  def update_hanged_status
+    hanged_man = { head: ' O', rarm: '\\', larm: ' /',
+                   torso: " |\n |", rleg: '/ ', lleg: '\\' }
+    # use @incorrect_guesses.length to calculate amount of limbs
+  end
 
   def win?
     @correct_guesses == @secret_word
