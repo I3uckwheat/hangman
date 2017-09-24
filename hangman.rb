@@ -1,47 +1,51 @@
 class GameEngine
+  require './hangman_game.rb'
   def initialize
     @hangman = Hangman.new
     menu
   end
 
-  def menu; end
+  def menu
+    # Give options for:
+    #   1. Start a new game
+    #   2. Exit
+  end
 
-  def main_loop; end
+  def main_loop
+    @hangman.guess_handler(recieve_input)
+  end
 
-  def recieve_input; end
+  def recieve_input
+    input_validator(gets.chomp)
+  end
 
-  def input_validator; end
-
-  def valid_input?; end
-
-  def update_playfield; end
-
-  def win?; end
-
-  def lose?; end
-
-  class Hangman
-    def initialize
-      @secret_word = select_word_from_list.split
-      @hanged_status = [[][][]]
-      @guesses = []
-      @correct_guesses = []
+  def input_validator(input)
+    valid = []
+    input.split('').scan(/\w+/).each do |letter|
+      valid << letter
     end
+    invalid_input if valid.empty?
+    valid
+  end
 
-    def select_word_from_list; end
+  def invalid_input
+    puts 'Invalid Input, try again'
+    recieve_input
+  end
 
-    def display_playfield; end
+  def win?
+    @hangman.win?
+  end
 
-    def guess_handler(letter); end
+  def win_message
+    'You won!'
+  end
 
-    def update_hanged_status; end
+  def lose?
+    @hangman.lose?
+  end
 
-    def update_guesses(letter); end
-
-    def update_correct_guesses(letter); end
-
-    def win?; end
-
-    def lose?; end
+  def lose_message
+    'You lost!'
   end
 end
