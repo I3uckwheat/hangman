@@ -12,7 +12,14 @@ class GameEngine
   end
 
   def main_loop
-    @hangman.guess_handler(recieve_input)
+    until win? || lose?
+      puts "\n\n"
+      @hangman.display_playfield
+      puts 'Make a guess!'
+      @hangman.guess_handler(recieve_input)
+      puts "\n\n"
+    end
+    win? ? win_message : lose_message
   end
 
   def recieve_input
@@ -21,7 +28,7 @@ class GameEngine
 
   def input_validator(input)
     valid = []
-    input.split('').scan(/\w+/).each do |letter|
+    input.scan(/\w+/).join.each_char do |letter|
       valid << letter
     end
     invalid_input if valid.empty?
@@ -38,7 +45,8 @@ class GameEngine
   end
 
   def win_message
-    'You won!'
+    puts 'You won!'
+    @hangman.display_playfield
   end
 
   def lose?
@@ -46,10 +54,10 @@ class GameEngine
   end
 
   def lose_message
-    'You lost!'
+    puts 'You lost!'
+    @hangman.display_playfield
   end
 end
-
 
 # Game logic
 # Menu
