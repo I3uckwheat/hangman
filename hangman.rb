@@ -49,3 +49,8 @@ class GameEngine
     'You lost!'
   end
 end
+
+
+# Game logic
+# Menu
+# saving and loading

@@ -1,11 +1,10 @@
 class Hangman
+  require './dictionary.rb'
   def initialize
-    @secret_word = 'testing'.split('') # select_word_from_list.split
-    @incorrect_guesses = []
+    @secret_word = Dictionary.new.random_word.downcase.split('')
     @correct_guesses = Array.new(@secret_word.length, '_')
+    @incorrect_guesses = []
   end
-
-  def select_word_from_list; end
 
   def display_playfield
     puts hanged_status
@@ -27,7 +26,6 @@ class Hangman
 
   def update_incorrect_guesses(letter)
     @incorrect_guesses << letter
-    puts "Guesses #{@guesses}"
     @incorrect_guesses
   end
 
@@ -35,7 +33,6 @@ class Hangman
     @secret_word.each_with_index do |secret_letter, index|
       @correct_guesses[index] = letter if letter == secret_letter
     end
-    puts "Correct Guesses: #{@correct_guesses}"
   end
 
   def hanged_status
