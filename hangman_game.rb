@@ -59,4 +59,20 @@ class Hangman
   def lose?
     @incorrect_guesses.length == 6
   end
+
+  def save_the_game
+    save_game(to_json)
+  end
+
+  def to_json
+    JSON.generate(secret_word: @secret_word,
+                  correct_guesses: @correct_guesses,
+                  incorrect_guesses: @incorrect_guesses)
+  end
+
+  def save_game(string)
+    File.open('saved.json', 'w') do |game_file|
+      game_file.write(string)
+    end
+  end
 end

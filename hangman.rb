@@ -74,14 +74,8 @@ class GameEngine
     @hangman.display_playfield
   end
 
-  def to_json
-    JSON.generate({hangman: @hangman})
-  end
-
-  def save_game(string)
-    File.open('saved.json', 'w') do |game_file|
-      game_file.write(string)
-    end
+  def save_game
+    @hangman.save_the_game
   end
 end
 
