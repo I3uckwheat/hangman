@@ -8,9 +8,12 @@ class Hangman
 
   def display_playfield
     puts hanged_status
+    puts ''
     puts @correct_guesses.to_s
     puts '----------------------------'
+    puts 'Incorrect Guesses'
     puts @incorrect_guesses.to_s
+    puts ''
   end
 
   def guess_handler(guesses)
@@ -73,6 +76,15 @@ class Hangman
   def save_game(string)
     File.open('saved.json', 'w') do |game_file|
       game_file.write(string)
+    end
+  end
+
+  def load_game
+    File.open('saved.json', 'r') do |game_file|
+      game_state = JSON.parse(game_file.read)
+      @secret_word = game_state['secret_word']
+      @correct_guesses = game_state['correct_guesses']
+      @incorrect_guesses = game_state['incorrect_guesses']
     end
   end
 end
